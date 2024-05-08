@@ -1,6 +1,6 @@
-# ResNet-50 Image Classifier
+# ResNet-50 Wound Image Classifier
 
-This is an Image Classifier that follows the Residual Network architecture with 50 layers that can be used to classify objects from among 6 different categories with a high accuracy. In recent years, neural networks have become deeper, with state-of-the-art networks going from just a few layers (e.g., AlexNet) to over a hundred layers. The main benefit of a very deep network is that it can represent very complex functions. It can also learn features at many different levels of abstraction, from edges (at the lower layers) to very complex features (at the deeper layers). However, using a deeper network doesn't always help. A huge barrier to training them is vanishing gradients: very deep networks often have a gradient signal that goes to zero quickly, thus making gradient descent unbearably slow.
+This is a Wound Image Classifier that follows the Residual Network architecture with 50 layers that can be used to classify objects from among 6 different categories with a high accuracy. In recent years, neural networks have become deeper, with state-of-the-art networks going from just a few layers (e.g., AlexNet) to over a hundred layers. The main benefit of a very deep network is that it can represent very complex functions. It can also learn features at many different levels of abstraction, from edges (at the lower layers) to very complex features (at the deeper layers). However, using a deeper network doesn't always help. A huge barrier to training them is vanishing gradients: very deep networks often have a gradient signal that goes to zero quickly, thus making gradient descent unbearably slow.
 
 <div align="center">
    <img src="./images/resnet.png" width=450 height=350>
