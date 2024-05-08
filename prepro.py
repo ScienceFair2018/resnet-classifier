@@ -16,7 +16,7 @@ resolution = 128
 @click.option(
     '-ds', 
     '--dataset-path', 
-    default='datasets/caltech_101', 
+    default='C:/Users/baroq/OneDrive/Documents/resnet-classifier/Multi-modal-wound-classification-using-images-and-locations-main\Multi-modal-wound-classification-using-images-and-locations-main/dataset/Train', 
     type=click.Path(exists=True), 
     help='Path for your Image Dataset'
 )
@@ -42,7 +42,7 @@ def main(dataset_path, make_datafiles):
 Augment Images
 """
 def augment_images(dataset_path):
-    categories = os.listdir('{}/train'.format(dataset_path))
+    categories = ['BG', 'D', 'N', 'P', 'S', 'V']
 
     datagen = keras.preprocessing.image.ImageDataGenerator(
             rotation_range=40,
@@ -82,14 +82,14 @@ def move_images(dataset_path):
     categories = os.listdir('{}/train'.format(dataset_path))
 
     for category in tqdm(categories, total=len(categories), desc='Moving Images'):
-        os.mkdir('{}/val/{}'.format(dataset_path, category))
+        os.makedirs('{}/val/{}'.format(dataset_path, category), exist_ok=True)
         category_images = os.listdir('{}/train/{}'.format(dataset_path, category))
         random_val_images = np.random.choice(category_images, 20, replace=False)
         for image_path in random_val_images:
             os.rename('{}/train/{}/{}'.format(dataset_path, category, image_path),
                     '{}/val/{}/{}'.format(dataset_path, category, image_path))
 
-        os.mkdir('{}/test/{}'.format(dataset_path, category))
+        os.makedirs('{}/test/{}'.format(dataset_path, category), exist_ok=True)
         category_images = os.listdir('{}/train/{}'.format(dataset_path, category))
         random_test_images = np.random.choice(category_images, 20, replace=False)
         for image_path in random_test_images:
