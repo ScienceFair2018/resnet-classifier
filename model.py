@@ -2,7 +2,7 @@ import keras
 import numpy as np
 
 # initializer =  keras.initializers.glorot_uniform(seed=0)
-initializer = keras.initializers.glorot_normal()
+initializer = keras.initializers.glorot_normal(seed = 42)
 
 """
 Creates Residual Network with 50 layers

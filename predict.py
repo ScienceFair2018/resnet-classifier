@@ -17,7 +17,7 @@ def make_prediction(model, path=None):
     if path is None:
         raise UserWarning('Image path should not be None!')
 
-    categories = os.listdir('datasets/caltech_101/train')
+    categories = ['BG', 'D', 'N', 'P', 'S', 'V']
 
     # preprocessing
     img = keras.preprocessing.image.load_img(path, target_size=(64, 64))

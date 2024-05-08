@@ -17,7 +17,7 @@ Train Model [optional args]
 @click.option(
     '-lr', 
     '--learning-rate', 
-    default=0.005, 
+    default=0.003, 
     help='Learning rate for minimizing loss during training'
 )
 @click.option(
@@ -29,13 +29,13 @@ Train Model [optional args]
 @click.option(
     '-ne', 
     '--num-epochs', 
-    default=50, 
+    default=10, 
     help='Number of epochs for training model'
 )
 @click.option(
     '-se',
     '--save-every',
-    default=1,
+    default=3,
     help='Epoch interval to save model checkpoints during training'
 )
 @click.option(
@@ -56,7 +56,7 @@ def train(learning_rate, batch_size, num_epochs, save_every, tensorboard_vis, pr
     datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 
     get_gen = lambda x: datagen.flow_from_directory(
-        'datasets/caltech_101/{}'.format(x),
+        'C:/Users/baroq/OneDrive/Documents/resnet-classifier/Multi-modal-wound-classification-using-images-and-locations-main\Multi-modal-wound-classification-using-images-and-locations-main/dataset/Train/{}'.format(x),
         target_size=(64, 64),
         batch_size=batch_size,
         class_mode='categorical'
@@ -74,7 +74,7 @@ def train(learning_rate, batch_size, num_epochs, save_every, tensorboard_vis, pr
     else:
         # create model
         logging.info('creating model')
-        resnet50 = create_model(input_shape=(64, 64, 3), classes=101)
+        resnet50 = create_model(input_shape=(64, 64, 3), classes=6)
     
     optimizer = keras.optimizers.Adam(learning_rate)
     resnet50.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
@@ -88,33 +88,37 @@ def train(learning_rate, batch_size, num_epochs, save_every, tensorboard_vis, pr
     logging.info('training model')
     resnet50.fit_generator(
         train_generator,
-        steps_per_epoch=72000//batch_size,
+        steps_per_epoch=1000//batch_size,
         epochs=num_epochs,
         verbose=1,
         validation_data=val_generator,
-        validation_steps=2200//batch_size,
+        validation_steps=100//batch_size,
         shuffle=True,
         callbacks=callbacks
     )
-    # save model
-    logging.info('Saving trained model to `models/resnet50.h5`')
-    resnet50.save('models/resnet50.h5')
+    # Save model
+    try:
+        logging.info('Saving trained model to `models/resnet50.h5`')
+        resnet50.save('models/resnet50.h5')
+        logging.info('Model saved successfully.')
+    except Exception as e:
+        logging.error(f'Error saving the model: {str(e)}')
 
     # evaluate model
     logging.info('evaluating model')
     preds = resnet50.evaluate_generator(
         test_generator,
-        steps=2200//batch_size,
+        steps=100//batch_size,
         verbose=1
     )
     logging.info('test loss: {:.4f} - test acc: {:.4f}'.format(preds[0], preds[1]))
 
-    keras.utils.plot_model(resnet50, to_file='models/resnet50.png')
+    #keras.utils.plot_model(resnet50, to_file='models/resnet50.png')
 
 """
 Configure Callbacks for Training
 """
-def configure_callbacks(save_every=1, tensorboard_vis=False):
+def configure_callbacks(save_every=1, tensorboard_vis=True):
     # checkpoint models only when `val_loss` impoves
     saver = keras.callbacks.ModelCheckpoint(
         'models/ckpts/model.ckpt',
