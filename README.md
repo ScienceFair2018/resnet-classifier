@@ -1,6 +1,6 @@
 # ResNet-50 Image Classifier
 
-This is an Image Classifier that follows the Residual Network architecture with 50 layers that can be used to classify objects from among 101 different categories with a high accuracy. In recent years, neural networks have become deeper, with state-of-the-art networks going from just a few layers (e.g., AlexNet) to over a hundred layers. The main benefit of a very deep network is that it can represent very complex functions. It can also learn features at many different levels of abstraction, from edges (at the lower layers) to very complex features (at the deeper layers). However, using a deeper network doesn't always help. A huge barrier to training them is vanishing gradients: very deep networks often have a gradient signal that goes to zero quickly, thus making gradient descent unbearably slow.
+This is an Image Classifier that follows the Residual Network architecture with 50 layers that can be used to classify objects from among 6 different categories with a high accuracy. In recent years, neural networks have become deeper, with state-of-the-art networks going from just a few layers (e.g., AlexNet) to over a hundred layers. The main benefit of a very deep network is that it can represent very complex functions. It can also learn features at many different levels of abstraction, from edges (at the lower layers) to very complex features (at the deeper layers). However, using a deeper network doesn't always help. A huge barrier to training them is vanishing gradients: very deep networks often have a gradient signal that goes to zero quickly, thus making gradient descent unbearably slow.
 
 <div align="center">
    <img src="./images/resnet.png" width=450 height=350>
@@ -30,24 +30,9 @@ The detailed structure of this ResNet-50 model (I've also added additional Batch
 
 ## Dataset
 
-We'll be using the [Caltech 101](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) Multi-Classification Object Dataset. The Dataset is a collection of pictures of objects belonging to 101 different categories. About 40 to 800 images per category. Most categories have about 50 images. Since the number of images for each class is less than sufficient for training our model we'll be using **Data Augmentation** to obtain more images. This is our directory structure:
+The machine learning tool was trained on a dataset of 730 wounds, collected by and labeled by specialists at the AZH Wound and Vascular Center in Wisconsin. These 730 images were then perturbed, by adding random noise, to make a training set of 3650 images total. The images were split into the following six categories: background, normal, surgical, venous, diabetic, pressure. The categorical split was approximately equal.
 
-```yaml
-datasets/
-    caltech_101/
-        train/
-            accordian/
-                image_0001.jpg
-                image_0002.jpg
-                ...
-            airplanes/
-                image_0001.jpg
-                image_0002.jpg
-                ...
-            ...
-```
-
-Our preprocessing script `prepro.py` will handle the rest.
+Our preprocessing script `prepro.py` will handle the data structure.
 
 ## Getting Started
 
